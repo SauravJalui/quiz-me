@@ -12,7 +12,7 @@
 
 **B. Concepts to implement**
 1. Class Based Views - []
-2.. Decorators (login logout) - []
+2. Decorators (login logout) - []
 3. Many-to-many models  - []
 4. UUID - []
 5. Docstrings - []
