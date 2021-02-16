@@ -37,9 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+
+    #local
     'accounts.apps.AccountsConfig',
-    'pages.apps.PagesConfig',
+
+    #3rd party
     'crispy_forms',
+    'allauth',
+    'allauth.account',
 ]
 
 MIDDLEWARE = [
@@ -127,18 +133,33 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 #custom user model
-
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 #redirect url after successful login/logout
-
 LOGIN_REDIRECT_URL = 'home'
-LOGOUT_REDIRECT_URL = 'home'
+# LOGOUT_REDIRECT_URL = 'home'
+# django-allauth ’s ACCOUNT_LOGOUT_REDIRECT actually overrides the
+# built-in LOGOUT_REDIRECT_URL so we use the LOGOUT_REDIRECT_URL 
+# instead of LOGOUT_REDIRECT_URL
+ACCOUNT_LOGOUT_REDIRECT = 'home'
+
 
 #template that crispy forms should use by default
-
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 # email using django console
-
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# django-allauth config
+SITE_ID = 1 
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend', 
+)
+
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email' 
+ACCOUNT_EMAIL_REQUIRED = True 
+ACCOUNT_UNIQUE_EMAIL = True 
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
