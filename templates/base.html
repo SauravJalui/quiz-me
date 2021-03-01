@@ -18,10 +18,10 @@
         <nav class="my-2 my-md-0 mr-md-3">
           {% if user.is_authenticated %}
             Hi {{user.email}}
-            <a class="p-2 text-dark" href="{% url 'accounts:logout' %}">Log Out</a>
+            <a class="btn btn-outline-danger" href="{% url 'accounts:logout' %}">Log Out</a>
           {% else %}
-            <a class="p-2 text-dark" href="{% url 'accounts:login' %}">Log In</a>
-            <a class="btn btn-outline-primary" href="{% url 'accounts:signup' %}">Sign Up</a>
+            <a class="btn btn-outline-primary" href="{% url 'accounts:login' %}">Log In</a>
+            <a class="btn btn-outline-success" href="{% url 'accounts:signup' %}">Sign Up</a>
           {% endif %}
         </nav>
     </div>

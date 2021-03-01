@@ -16,7 +16,7 @@ app_name = 'accounts'
 urlpatterns = [
     path('login/', LoginView.as_view(
         redirect_authenticated_user=True, template_name='registration/login.html'), name='login'),
-    path('logout/', LogoutView.as_view(next_page='login'), name='logout'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('signup/', SignUpView.as_view(), name='signup'),
     path('profile/<uuid:pk>/', ProfileView.as_view(), name='profile'),
     path('activate/<uidb64>/<token>/', ActivateAccount.as_view(), name='activate'),
