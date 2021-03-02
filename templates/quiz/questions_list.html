@@ -4,9 +4,7 @@
 <div class="card text-center"> 
     <div class="card-body"> 
         <h1>Welcome To QuizMe</h1> 
-        <ol>{% for question in object_list %}</ol>
-        <li><a class="" href="{% url 'quiz:questions_list' pk=question.id %}"> {{ question.question }} </a></li>
-            {% endfor %}
+        <li><a class="" href=""> {{ question.question }} </a></li>
         </a > 
     </div> 
 </div> 

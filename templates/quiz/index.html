@@ -3,16 +3,12 @@
 
 <div class="card text-center"> 
     <div class="card-body">
-        {% if user.is_authenticated %} 
+        {% if request.user.is_authenticated %} 
             <h1>Welcome To QuizMe</h1> 
             <a class="btn btn-outline-dark" href="{% url 'quiz:quiz' %}"> View Available Quizzes</a>
             <a class="btn btn-outline-dark" href="{% url 'accounts:profile' pk=user.uuid %}">Profile </a>
         {% else %}
-            <h1>Welcome To QuizMe</h1> 
-            <a class="btn btn-outline-primary" href="{% url 'accounts:login' %}">Log In</a>
-            <p></p>
-            <a class="btn btn-outline-success" href="{% url 'accounts:signup' %}">Sign Up</a> <p></p>
-            <a class="btn btn-outline-warning" href="{% url 'accounts:password_reset' %}">Reset Password</a> <p></p>
+            <p>You need to log in to continue</p>
         {% endif %}
     </div> 
 </div> 
