@@ -1,8 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from . models import Question
+from accounts.models import Profile
+
+
+from django.views.generic import ListView
 
 def home(request):
-    latest_question_list = Question.objects.all()
-    context = {'latest_question_list': latest_question_list}
-    return render(request, 'quiz/index.html', context)
+    return render(request, 'quiz/index.html', {'profile': get_object_or_404(Profile, user=request.user)})
 
+class Quiz(ListView):
+    '''Get questions and display them'''
+    model = Question
+    template_name = 'quiz/quiz.html'

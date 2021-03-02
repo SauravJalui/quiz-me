@@ -1,18 +1,23 @@
 {% extends 'base.html' %}
+{% load crispy_forms_tags %}
 
 {% block title %}Login Page{% endblock title %}
 
-{% block content %} 
-    <h2>Login</h2> <p></p>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button class="btn btn-success ml-2" type="submit">Log In</button>
-        <br><br>
-        <a href="{% url 'accounts:password_reset' %}">Forgot Password?</a>
-        <br><br>
-        <a href="{% url 'accounts:signup' %}">If you do not have an account, Sign Up!</a>
-        <br><br>
-        <a href="{% url 'quiz:home' %}">Go to the HomePage</a>
-    </form>
+{% block content %}
+<div class="card text-center">
+    <div class="card-body">
+        <h2>Login</h2> <p></p>
+        <form method="post">
+            {% csrf_token %}
+            {{ form | crispy }} <p></p>
+            <button class="btn btn-success ml-2" type="submit">Log In</button>
+            <br><br>
+            <a href="{% url 'accounts:password_reset' %}">Forgot Password?</a>
+            <br><br>
+            <a href="{% url 'accounts:signup' %}">If you do not have an account, Sign Up!</a>
+            <br><br>
+            <a href="{% url 'quiz:home' %}">Go to the HomePage</a>
+        </form>
+    </div>
+</div> 
 {% endblock content %}

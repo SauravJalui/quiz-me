@@ -1,0 +1,14 @@
+{% extends 'base.html' %} 
+{% block content %} 
+
+<div class="card text-center"> 
+    <div class="card-body"> 
+        <h1>Welcome To QuizMe</h1> 
+        <ol>{% for question in object_list %}</ol>
+        <li><a class="" href="{% url 'quiz:quiz' %}"> {{ question.question }} </a></li>
+            {% endfor %}
+        </a > 
+    </div> 
+</div> 
+
+{% endblock %}

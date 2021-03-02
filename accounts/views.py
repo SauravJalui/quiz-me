@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import View, UpdateView
 from . forms import SignUpForm, ProfileForm
-from . models import CustomUser
+from . models import CustomUser, Profile
 from django.contrib.auth import login
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
@@ -47,7 +47,7 @@ class SignUpView(View):
 
 
 class ActivateAccount(View):
-    '''This is a function to confirm the user email, if email is not confirmed he has no access to the account'''
+    '''This is a function to confirm the user email, if email is not confirmed user has no access to the account'''
     def get(self, request, uidb64, token, *args, **kwargs):
         try:
             uid = force_text(urlsafe_base64_decode(uidb64))

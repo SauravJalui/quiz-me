@@ -5,7 +5,7 @@ from . models import Topic, Question, Answer
 
 class AnswerInline(admin.TabularInline):
     model = Answer
-    extra = 4
+    extra = 3
 
 class QuestionAdmin(admin.ModelAdmin):
     inlines = [AnswerInline]

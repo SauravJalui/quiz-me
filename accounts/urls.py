@@ -16,7 +16,7 @@ app_name = 'accounts'
 urlpatterns = [
     path('login/', LoginView.as_view(
         redirect_authenticated_user=True, template_name='registration/login.html'), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
+    path('logout/', LogoutView.as_view(template_name='registration/logout.html'), name='logout'),
     path('signup/', SignUpView.as_view(), name='signup'),
     path('profile/<uuid:pk>/', ProfileView.as_view(), name='profile'),
     path('activate/<uidb64>/<token>/', ActivateAccount.as_view(), name='activate'),
@@ -34,7 +34,7 @@ urlpatterns = [
             template_name='registration/password-reset/password_reset.html',
             subject_template_name='registration/password-reset/password_reset_subject.txt',
             email_template_name='registration/password-reset/password_reset_email.html',
-            success_url = reverse_lazy('login')
+            success_url = reverse_lazy('accounts:login')
         ),
         name='password_reset'),
 
