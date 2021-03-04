@@ -1,22 +1,12 @@
-{% extends 'base.html' %}
+{% extends 'base.html' %} 
+{% block content %} 
 
-{% block content %}
-<h2>{{ current_question.question_text }}</h2>
+<div class="card text-center"> 
+    <div class="card-body"> 
+        <h1>Welcome To QuizMe</h1> 
+        <li><a class="" href=""> </a></li>
+       
+    </div> 
+</div> 
 
-<form method="post">
-    {% csrf_token %}
-    {{ form }}
-    {% if previous_question %}
-        <div>
-        <button type="submit">
-            <a href="../{{ previous_question.id }}">Previous</a>
-        </button>
-    {% endif %}
-    {% if next_question %}
-        <input type="submit" name="next" value="Next" class="btn-blue">
-        </div>
-    {% else %}
-        <input type="submit" name="next" value="Submit" class="btn-blue">
-    {% endif %}
-</form>
 {% endblock %}

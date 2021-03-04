@@ -1,50 +1,40 @@
 from django.db import models
 from accounts.models import CustomUser
-from django.urls import reverse
 import uuid
 
 
 class Question(models.Model):
+    '''This displays the questions'''
     id = models.UUIDField(
         primary_key=True, 
         default=uuid.uuid4, 
         editable=False)
-    question_text = models.CharField(max_length=200)
+    question_text = models.CharField(max_length=150)
+    option1 = models.CharField(max_length=100)
+    option2 = models.CharField(max_length=100)
+    option3 = models.CharField(max_length=100)
+    option4 = models.CharField(max_length=100)
+    choices_mcq = (
+        (1, (1)),
+        (2, (2)),
+        (3, (3)),
+        (4, (4)),
+    )
+    correct_answer_mcq = models.IntegerField(default=0, choices=choices_mcq)
+    is_attempted = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.question_text)
+        return self.question_text
 
-class User(models.Model):
-    name = models.CharField(max_length=200)
-    score = models.IntegerField(default=0)
+# class Answer(models.Model):
+#     '''choices for questions'''
+#     id = models.UUIDField(
+#         primary_key=True, 
+#         default=uuid.uuid4, 
+#         editable=False)
+#     question = models.ForeignKey(Question,on_delete=models.CASCADE)
+#     answer = models.CharField(max_length=150)
+#     correct = models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.name
-
-
-class Choice(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    correct = models.BooleanField(default=False)
-    choice_text = models.CharField(max_length=200)
-
-    def __str__(self):
-        return str(self.choice_text)
-
-
-class Answer(models.Model):
-    '''choices for questions'''
-    id = models.UUIDField(
-        primary_key=True, 
-        default=uuid.uuid4, 
-        editable=False)
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
-    choices = models.ForeignKey(Choice, on_delete=models.CASCADE)
-
-    def get_absolute_url(self):
-        return reverse('answer-detail', kwargs={'pk': self.pk})
-
-
-
-
-
-
+#     def __str__(self):
+#         return self.answer
