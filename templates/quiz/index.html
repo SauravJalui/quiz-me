@@ -1,16 +1,4 @@
 {% extends 'base.html' %} 
+{% load static %}
 {% block content %} 
-
-<div class="card text-center"> 
-    <div class="card-body">
-        {% if request.user.is_authenticated %} 
-            <h1>Welcome To QuizMe</h1> 
-            <a class="btn btn-outline-dark" href="{% url 'quiz:quiz' %}"> View Available Quizzes</a>
-            <a class="btn btn-outline-dark" href="{% url 'accounts:profile' pk=user.uuid %}">Profile </a>
-        {% else %}
-            <p>You need to log in to continue</p>
-        {% endif %}
-    </div> 
-</div> 
-
 {% endblock %}

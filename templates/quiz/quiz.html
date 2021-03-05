@@ -1,19 +1,23 @@
 {% extends 'base.html' %} 
+{% load static %}
 {% block content %} 
 
 <div class="card text-center"> 
     <div class="card-body"> 
-        <h1>Welcome To QuizMe</h1> 
-                {{ question.question_text }}
-                    <ol>
-                    <input type="radio" name="user_answer" cla ss="rb"id=Option value="1"> {{question.option1}} <br>
-                    <input type="radio" name="user_answer" class="rb" id=Option value="2"> {{question.option2}} <br>
-                    <input type="radio" name="user_answer" class="rb" id=Option value="3"> {{question.option3}} <br>
-                    <input type="radio" name="user_answer" class="rb" id=Option value="4"> {{question.option4}} <br>
-                    </ol>
-                    <button type="submit">submit</button>
-
+        <div class="container" style="position:absolute; right:-500px; top:30px;">
+            <h5>00:00</h5>
+        </div>
+        <strong><h3>{{ question.question_text }}</h3></strong>
+        <ol>
+        <input type="radio" name="user_answer" cla ss="rb"id=Option value="1"> {{question.option1}} <br>
+        <input type="radio" name="user_answer" class="rb" id=Option value="2"> {{question.option2}} <br>
+        <input type="radio" name="user_answer" class="rb" id=Option value="3"> {{question.option3}} <br>
+        <input type="radio" name="user_answer" class="rb" id=Option value="4"> {{question.option4}} <br>
+        </ol>
+        <button type="submit">submit</button>
     </div> 
 </div> 
 
-{% endblock %}
+<script src="{% static 'script.js' %}"></script>
+
+{% endblock content %}

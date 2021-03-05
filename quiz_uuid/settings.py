@@ -125,10 +125,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',
-    BASE_DIR / 'quizzes' / 'static',
-]
+STATICFILES_DIRS = [BASE_DIR / 'static']
 
 #using custom user model
 AUTH_USER_MODEL = 'accounts.CustomUser'

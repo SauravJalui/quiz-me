@@ -23,9 +23,23 @@
           {% else %}
             <p></p>
           {% endif %}
-        </nav>
+        </nav> 
     </div>
   </header>
+
+
+<div class="card text-center"> 
+  <div class="card-body">
+      {% if request.user.is_authenticated %} 
+          <a class="btn btn-outline-dark" href="{% url 'quiz:quiz' %}"> View Available Questions </a>
+          <a class="btn btn-outline-dark" href="{% url 'accounts:profile' pk=user.uuid %}">Profile </a>
+      {% else %}
+      <div class="alert alert-danger" role="alert">
+        You need to log in to continue
+      </div>
+      {% endif %}
+  </div> 
+</div> 
   <div class="container">
     {% block content %}
     {% endblock content %}
