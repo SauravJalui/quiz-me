@@ -1,17 +1,17 @@
 from django import forms
-from django.forms import ModelForm
-from .models import User, Answer
+from django.forms.widgets import RadioSelect, Textarea
 
 
-class QuestionAnswerForm(ModelForm):
-    class Meta:
-        model = Answer
-        fields = ['choices']
+class QuestionForm(forms.Form):
+    def __init__(self, question, *args, **kwargs):
+        super(QuestionForm, self).__init__(*args, **kwargs)
+        choice_list = [x for x in question.get_answers_list()]
+        self.fields["answers"] = forms.ChoiceField(choices=choice_list,
+                                                   widget=RadioSelect)
 
-    def __init__(self, *args, **kwargs):
-        super(QuestionAnswerForm, self).__init__(*args, **kwargs)
-        question = self.initial['question']
-        self.fields['choices'] = forms.ModelChoiceField(
-            queryset=question.choice_set.all(), 
-            widget=forms.RadioSelect,
-            label="", )
+
+class EssayForm(forms.Form):
+    def __init__(self, question, *args, **kwargs):
+        super(EssayForm, self).__init__(*args, **kwargs)
+        self.fields["answers"] = forms.CharField(
+            widget=Textarea(attrs={'style': 'width:100%'}))
