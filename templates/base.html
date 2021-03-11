@@ -19,6 +19,7 @@
           {% if user.is_authenticated %}
             Hi {{user.email}}
             <a class="btn btn-outline-success" href="{% url 'accounts:change_password' %}">Change Password</a>
+            <a class="btn btn-outline-secondary" href="{% url 'accounts:profile' pk=user.uuid %}">Profile</a>
             <a class="btn btn-outline-danger" href="{% url 'accounts:logout' %}">Log Out</a>
           {% else %}
             <p></p>

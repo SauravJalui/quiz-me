@@ -1,14 +1,19 @@
 from django.contrib import admin
-from . models import Topic, Question, Answer
+from . models import (
+    Question, 
+    Mcq, 
+    FillInTheBlanks, 
+    AnswerGiven, 
+    UserProgress
+)
+
+admin.site.site_header = "QuizMe Admin"
+admin.site.site_title = "QuizMe Admin Area"
 
 
 
-class AnswerInline(admin.TabularInline):
-    model = Answer
-    extra = 3
-
-class QuestionAdmin(admin.ModelAdmin):
-    inlines = [AnswerInline]
-
-admin.site.register(Topic)
-admin.site.register(Question,QuestionAdmin)
+admin.site.register(Question)
+admin.site.register(Mcq)
+admin.site.register(FillInTheBlanks)
+admin.site.register(AnswerGiven)
+admin.site.register(UserProgress)
