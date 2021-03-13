@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load mathfilters %}
+{% load crispy_forms_tags%}
+
+{% block content %}
+
+<div style="padding-left: 10px; padding-right: 10px;"></div>
+<div id="start-time" style="display: none;">{{start_time|date:'Y-m-d H:i:s'}}</div>
+<div id="end-time" style="display: none;">{{end_time|date:'Y-m-d H:i:s'}}</div>
+<h5>Time left: <p id="countdown" style="position: relative; padding: 0%;"></p></h5>
+<br>
+<div class="progress" style="padding: 0%;">
+    <div class="progress-bar bg-success" role="progressbar" id="pg" 
+        aria-valuemin="0" aria-valuemax="100" style="width:
+        {% with progress_bar=page_obj.number|mul:100 total_pages=page_obj.paginator.num_pages %}
+        {{ progress_bar|div:total_pages}}%" %>
+        {% endwith %}
+    </div>
+</div>
+
+{% for question in questions %}    <hr>
+    <form method="POST" id="myform">
+        {% csrf_token %}
+            <b>{{page_obj.number}}] {{question.title}}</b>  
+                <input type="hidden" id="question_id" name="question_id" value="{{question.id}}">
+                    {% if question.question_type == "MCQ" %}
+                        {% for mcq in mcqs %}
+                            {% if mcq.question.id == question.id %} <br>
+                                <input type="radio" id=Option value="1" class="rb" name="user_answer"> {{mcq.option1}}<br>
+                                <input type="radio" id=Option value="2" class="rb" name="user_answer"> {{mcq.option2}}<br>
+                                <input type="radio" id=Option value="3" class="rb" name="user_answer"> {{mcq.option3}} <br>
+                                <input type="radio" id=Option value="4" class="rb" name="user_answer"> {{mcq.option4}}<br>
+                                <br>
+                            {% endif %}
+                        {% endfor %}    
+                    {% elif question.question_type == "FillInTheBlanks" %}<br>
+                        <input type="text" id=user_answer name="user_answer" class="rb"> <br>                <hr>  
+                    {% endif %}
+    <div>
+        {% if is_paginated %}
+            {% if page_obj.has_next %}
+            <input class="btn btn-outline-primary" href="?page={{ page_obj.next_page_number }}" 
+            form="myform" type="submit" value="Next question">
+        {% else %}
+            <input class="btn btn-outline-info" href="{% url 'quiz:result-page' %}" form="myform" type="Submit" value="Submit">
+            {% endif %}
+        {% endif %}
+    </div>
+</form>
+{% endfor %}
+
+
+<script src="{% static 'script.js' %}"></script>
+<script>
+    timer("{% url 'quiz:result-page' %}")
+</script>
+
+{% endblock content %}

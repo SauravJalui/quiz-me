@@ -1,36 +1,50 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>{% block title %}Quiz Me{% endblock title %}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
+<meta charset="utf-8">
+<title>{% block title %}Quiz Me{% endblock title %}</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
   <!-- CSS -->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
 
 </head>
 <body>
-  <header> 
-    <!-- Fixed navbar -->
-  <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4
-     mb-3 bg-white border-bottom shadow-sm">
-      <a href="{% url 'quiz:home' %}" class="navbar-brand my-0 mr-md-auto
-      font-weight-normal">Quiz Me</a>
-        <nav class="my-2 my-md-0 mr-md-3">
-          {% if user.is_authenticated %}
+<header> 
+<!-- Fixed navbar -->
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4
+    mb-3 bg-white border-bottom shadow-sm">
+    <a href="{% url 'quiz:start-page' %}" class="navbar-brand my-0 mr-md-auto
+    font-weight-normal">Quiz Me</a>
+    <nav class="my-2 my-md-0 mr-md-3">
+        {% if user.is_authenticated %}
             Hi {{user.email}}
             <a class="btn btn-outline-success" href="{% url 'accounts:change_password' %}">Change Password</a>
             <a class="btn btn-outline-secondary" href="{% url 'accounts:profile' pk=user.uuid %}">Profile</a>
             <a class="btn btn-outline-danger" href="{% url 'accounts:logout' %}">Log Out</a>
-          {% else %}
+        {% else %}
             <p></p>
-          {% endif %}
-        </nav>
-    </div>
-  </header>
-  <div class="container">
-    {% block content %}
-    {% endblock content %}
-  </div> 
+        {% endif %}
+    </nav>
+</div>
+</header>
+  <main class="container">
+    <div class="text-center">
+        {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{message.tags}}">
+            {{message}}
+          </div>
+        {% endfor %}
+        {% endif %}
+        <div class="container">
+          {% block content %}
+          {% endblock content %}
+        </div> 
+      </div>
+  </main>
+
+
   <!-- JavaScript -->
   <!-- JS, Popper.js, and jQuery -->
   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>

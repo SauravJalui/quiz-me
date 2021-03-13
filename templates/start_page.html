@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags%}
+{% block content %}
+
+<div class="card text-center"> 
+    <div class="card-body"> 
+        <h2>Welcome to Quiz Me</h2>
+        {% if user.is_authenticated %}
+            <h5>Hi {{user.email}}</5> <br>
+            <h5>Start quiz by clicking : <a class="btn btn-success" href="{% url 'quiz:question-page' %}"> Start</a></h5> 
+        {% else %}
+            If you don't have an account,<br><a class="btn btn-primary" href="{% url 'accounts:signup' %}">SignUp </a> <br>
+            Already Have An Account? <br> <a class="btn btn-success" href="{% url 'accounts:login'%}">LogIn</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}

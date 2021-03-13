@@ -39,7 +39,7 @@ class SignUpView(View):
             })
             user.email_user(subject, message)
 
-            messages.success(request, ('Please Confirm your email to complete registration.'))
+            messages.success(request, ('Please confirm your email to complete registration.'))
 
             return redirect('accounts:login')
 
@@ -59,12 +59,11 @@ class ActivateAccount(View):
             user.is_active = True
             user.profile.email_confirmed = True
             user.save()
-            login(request, user)
-            messages.success(request, ('Your account have been confirmed.'))
-            return redirect('quiz:home')
+            messages.success(request, ('Your account have been confirmed, Kindly log in to your account now'))
+            return redirect('accounts:login')
         else:
             messages.warning(request, ('The confirmation link was invalid, possibly it has already been used.'))
-            return redirect('quiz:home')
+            return redirect('quiz:start-page')
 
 
 
@@ -72,5 +71,5 @@ class ProfileView(UpdateView):
     '''This is to update the users details'''
     model = CustomUser
     form_class = ProfileForm
-    success_url = reverse_lazy('quiz:home')
+    success_url = reverse_lazy('quiz:start-page')
     template_name = 'registration/profile.html'

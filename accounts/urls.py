@@ -21,11 +21,10 @@ urlpatterns = [
     path('profile/<uuid:pk>/', ProfileView.as_view(), name='profile'),
     path('activate/<uidb64>/<token>/', ActivateAccount.as_view(), name='activate'),
 
-    path(
-        'change-password/',
+    path('change-password/',
         PasswordChangeView.as_view(
             template_name='registration/change-password.html',
-            success_url = reverse_lazy('quiz:home')
+            success_url = reverse_lazy('quiz:start-page')
         ),
         name='change_password'),
 

@@ -33,8 +33,8 @@ class Mcq(models.Model):
         Question, on_delete=models.CASCADE)
     option1 = models.CharField(max_length=100)
     option2 = models.CharField(max_length=100)
-    option3 = models.CharField(max_length=100, blank= True)
-    option4 = models.CharField(max_length=100, blank= True)
+    option3 = models.CharField(max_length=100)
+    option4 = models.CharField(max_length=100)
     choices_mcq = [
         (1, (1)),
         (2, (2)),
@@ -98,7 +98,7 @@ class UserProgress(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     current_page = models.IntegerField(default=1)
     user_score = models.IntegerField(default=0)
-    user_time = models.DateTimeField(default=datetime.now)
+    user_time = models.DateTimeField(default=get_deadline)
     user_end_time = models.DateTimeField(default=get_deadline)
     has_started = models.BooleanField(default=False)
     has_finished = models.BooleanField(default=False)

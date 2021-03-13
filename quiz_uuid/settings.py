@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     #3rd party apps
     'crispy_forms',
+    'mathfilters'
 ]
 
 MIDDLEWARE = [
@@ -131,10 +132,10 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Page to go after successfull login
-LOGIN_REDIRECT_URL = 'quiz:home'
+LOGIN_REDIRECT_URL = 'quiz:start-page'
 
 # Page to go after successfull logout
-LOGOUT_REDIRECT_URL = 'quiz:home'
+LOGOUT_REDIRECT_URL = 'quiz:start-page'
 
 # This will display email in Console.
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

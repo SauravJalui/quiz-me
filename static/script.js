@@ -1,26 +1,29 @@
-let timeSecond = 200;
-const timeH = document.querySelector("h5");
+const end_time = document.getElementById('end-time')
+const countdown = document.getElementById('countdown')
+const start_time = document.getElementById('start-time')
 
-displayTime(timeSecond);
 
-const countDown = setInterval(() => {
-timeSecond--;
-displayTime(timeSecond);
-if (timeSecond == 0 || timeSecond < 1) {
-    endCount();
-    clearInterval(countDown);
+function timer(url) {
+    setInterval(() => {
+        const now = new Date().getTime()
+        const time_left = Date.parse(end_time.textContent)
+        const difference = time_left - now
+        const minutes = Math.floor((time_left / (1000 * 60) - (now / (1000 * 60))) % 60)
+        let seconds = Math.floor((time_left / (1000) - (now / (1000))) % 60)
+        seconds = seconds < 10 ? '0' + seconds : seconds
+        seconds = seconds == 60 ? '00' : seconds
+        if (difference > 0) {
+            countdown.innerHTML = minutes + ":" + seconds
+        }
+        else {
+            var cells = document.getElementsByClassName("rb")
+            for (var i = 0; i < cells.length; i++) {
+                cells[i].disabled = true;
+                countdown.innerHTML = 'Time Over'
+                location.href = url
+            }
+        }
+
+
+    }, 1000);
 }
-}, 1000);
-
-function displayTime(second) {
-const min = Math.floor(second / 60);
-const sec = Math.floor(second % 60);
-timeH.innerHTML = `
-${min < 10 ? "0" : ""}${min}:${sec < 10 ? "0" : ""}${sec}
-`;
-}
-
-function endCount() {
-timeH.innerHTML = "Time out";
-}
-

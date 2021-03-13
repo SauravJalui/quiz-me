@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+<div class="card text-center"> 
+    <div class="card-body"> 
+        <h2>Hi {{ user.email }}</h2>
+        <h5 class="text-primary"> You have answered {{ user_score }} questions correctly,
+        out of {{total_questions}} questions </h5>
+            <input type="submit" value="Click to check answers" id="button1" class="btn btn-success" onclick="getanswers();" /> <br>
+      <b id="UserAnswers"></b>
+    </div>
+</div>
+
+
+<script>
+    function getanswers() {
+        document.getElementById("UserAnswers").innerHTML = `
+        <p>{% for answer_given in answer_given %}
+                {% if answer_given.user_answer_mcq %} <br>
+                    {% for mcq in mcq %}
+                        {% if answer_given.question.id == mcq.question.id %}
+                            <u> {{answer_given.question }} </u>
+                                <br>Option 1: {{ mcq.option1 }}
+                                <br>Option 2: {{ mcq.option2 }}
+                                <br>Option 3: {{ mcq.option3 }}
+                                <br>Option 4: {{ mcq.option4 }}
+                        {% if answer_given.is_answer_correct == True %}
+                            <br><p class="text-success">Congratulations!&#127881; You answered correctly.
+                            <br><p class="text-success">You chose Option{{ answer_given.user_answer_mcq }}
+                            <br>Answer is Option {{answer_given.user_answer_mcq}} </p>
+                        {% else %}
+                            <br><p class="text-danger">Incorrect Answer &#x2639
+                            <br> <br>You choose Option {{answer_given.user_answer_mcq}}
+                            <br>Correct Answer is Option{{mcq.correct_answer_mcq}} </p>
+                        {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                    {% elif answer_given.user_answer_fill_in_the_blanks %}
+                    <br>
+                      {% for fill_in_the_blanks in fill_in_the_blanks %}
+                        {% if answer_given.question.id == fill_in_the_blanks.question.id %}
+                          {% if answer_given.is_answer_correct == True %}
+                            <br><u>{{answer_given.question }} </u>
+                            <br><p class="text-success">Congratulations!&#127881; You answered correctly.
+                            <p class="text-success">You answered : {{ answer_given.user_answer_fill_in_the_blanks }}
+                            <br>Answer is : {{fill_in_the_blanks.correct_answer_fill_in_the_blanks }} </p>
+                          {% else %}
+                            <br>{{answer_given.question }} 
+                            <br><p class="text-danger">Incorrect Answer &#x2639 
+                            <br> <br>You answered : {{answer_given.user_answer_fill_in_the_blanks }}
+                            <br>Correct Answer is : {{fill_in_the_blanks.correct_answer_fill_in_the_blanks}} </p>
+                          {% endif %}
+                        {% endif %}
+                      {% endfor %}
+                    {% endif %}
+                  {% endfor%}
+        </p>
+        `;
+  }
+</script>
+{% endblock content %}
