@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from accounts.models import CustomUser
-from django.views.generic import ListView
+from django.views.generic import ListView, TemplateView
 from django.contrib.auth.decorators import login_required
 from django.utils import decorators
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -154,6 +154,6 @@ class ResultPageListView(ListView):
         return context
 
 
-class StartPage(ListView):
+class StartPage(TemplateView):
     template_name = 'start_page.html'
     model = CustomUser
