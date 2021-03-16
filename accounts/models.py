@@ -19,7 +19,7 @@ class CustomUser(AbstractUser):
     objects = CustomUserManager()
 
     def __str__(self):
-        return self.email
+        return f'{self.email}'
 
 class Profile(models.Model):
     '''This defines the user model, which has the username'''
@@ -31,4 +31,4 @@ class Profile(models.Model):
     email_confirmed = models.BooleanField(default=False)
 
     def __str__(self):
-        return str(self.user)
+        return f'{self.user}'

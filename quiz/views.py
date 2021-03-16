@@ -1,5 +1,5 @@
-from django.shortcuts import render, get_object_or_404
-from accounts.models import Profile, CustomUser
+from django.shortcuts import get_object_or_404
+from accounts.models import CustomUser
 from django.views.generic import ListView
 from django.contrib.auth.decorators import login_required
 from django.utils import decorators
@@ -46,7 +46,6 @@ class ExamListView(ListView):
 
         user_progress = get_object_or_404(UserProgress,
                                           user=self.request.user)
-
         question = get_object_or_404(Question, id=question_id)
         if question_data is not None:
             mcq = Mcq.objects.all()

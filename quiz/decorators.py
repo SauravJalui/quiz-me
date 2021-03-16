@@ -1,6 +1,7 @@
 from .models import UserProgress
-from django.shortcuts import get_object_or_404
-from django.shortcuts import HttpResponseRedirect, reverse
+from django.shortcuts import (
+    get_object_or_404, HttpResponseRedirect, reverse
+)
 from django.contrib import messages
 from datetime import datetime
 

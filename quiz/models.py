@@ -35,12 +35,12 @@ class Mcq(models.Model):
     option2 = models.CharField(max_length=100)
     option3 = models.CharField(max_length=100)
     option4 = models.CharField(max_length=100)
-    choices_mcq = [
+    choices_mcq = (
         (1, (1)),
         (2, (2)),
         (3, (3)),
         (4, (4)),
-    ]
+    )
     correct_answer_mcq = models.IntegerField(choices=choices_mcq)
     
     class Meta:
@@ -76,7 +76,7 @@ class AnswerGiven(models.Model):
         Question, on_delete=models.CASCADE)
     user_answer_mcq = models.IntegerField(default=0)
     user_answer_fill_in_the_blanks = models.CharField(
-        default="", max_length=100)
+        max_length=100)
     is_answer_correct = models.BooleanField(default=False)
 
     class Meta:
@@ -86,7 +86,7 @@ class AnswerGiven(models.Model):
         return f'{self.question}'
 
 def get_deadline():
-    return datetime.now() + timedelta(days=10)
+    return datetime.now() + timedelta(days=30)
 
 class UserProgress(models.Model):
     '''tracks user progress'''
@@ -107,4 +107,4 @@ class UserProgress(models.Model):
         verbose_name_plural = "User's Progress"
 
     def __str__(self):
-        return f'{self.user.email} Progress'
+        return f'{self.user.email}\'s Progress'

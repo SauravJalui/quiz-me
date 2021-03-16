@@ -1,20 +1,21 @@
 from django.urls import path
 from django.urls import reverse_lazy
-from django.contrib.auth.views import (
-    LoginView, 
-    LogoutView, 
+from django.contrib.auth.views import ( 
+    LogoutView,
+    PasswordResetView, 
     PasswordChangeView,
-    PasswordResetView,
     PasswordResetDoneView,
     PasswordResetConfirmView,
     PasswordResetCompleteView,
 )
-from . views import SignUpView, ProfileView, ActivateAccount
+from . views import (
+    SignUpView, ProfileView, ActivateAccount, CustomLoginView
+)
 
 app_name = 'accounts'
 
 urlpatterns = [
-    path('login/', LoginView.as_view(
+    path('login/', CustomLoginView.as_view(
         redirect_authenticated_user=True, template_name='registration/login.html'), name='login'),
     path('logout/', LogoutView.as_view(template_name='registration/logout.html'), name='logout'),
     path('signup/', SignUpView.as_view(), name='signup'),

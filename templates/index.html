@@ -11,7 +11,7 @@
 <h5>Time left: <p id="countdown" style="position: relative; padding: 0%;"></p></h5>
 <br>
 <div class="progress" style="padding: 0%;">
-    <div class="progress-bar bg-success" role="progressbar" id="pg" 
+    <div class="progress-bar bg-success" role="progressbar" id="pg" aria-valuenow="60"
         aria-valuemin="0" aria-valuemax="100" style="width:
         {% with progress_bar=page_obj.number|mul:100 total_pages=page_obj.paginator.num_pages %}
         {{ progress_bar|div:total_pages}}%" %>
@@ -41,9 +41,9 @@
         {% if is_paginated %}
             {% if page_obj.has_next %}
             <input class="btn btn-outline-primary" href="?page={{ page_obj.next_page_number }}" 
-            form="myform" type="submit" value="Next question">
+            form="myform" type="submit" value="Next">
         {% else %}
-            <input class="btn btn-outline-info" href="{% url 'quiz:result-page' %}" form="myform" type="Submit" value="Submit">
+            <input class="btn btn-outline-info" href="{% url 'quiz:result-page' %}" form="myform" type="submit" value="Submit">
             {% endif %}
         {% endif %}
     </div>

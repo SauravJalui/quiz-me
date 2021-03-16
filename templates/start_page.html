@@ -2,15 +2,23 @@
 {% load crispy_forms_tags%}
 {% block content %}
 
-<div class="card text-center"> 
+<div class="card text-left"> 
     <div class="card-body"> 
         <h2>Welcome to Quiz Me</h2>
         {% if user.is_authenticated %}
-            <h5>Hi {{user.email}}</5> <br>
+            <h5>Hi {{user.email}}</h5> <br>
             <h5>Start quiz by clicking : <a class="btn btn-success" href="{% url 'quiz:question-page' %}"> Start</a></h5> 
         {% else %}
             If you don't have an account,<br><a class="btn btn-primary" href="{% url 'accounts:signup' %}">SignUp </a> <br>
-            Already Have An Account? <br> <a class="btn btn-success" href="{% url 'accounts:login'%}">LogIn</a>
+            Already Have An Account? <br> <a class="btn btn-success" href="{% url 'accounts:login'%}">LogIn</a> <p></p>
+            <h5>Instructions for quiz:</h5>
+            <ul>
+            <li>Once you login, the quiz will start directly.</li>
+            <li>Once you attempt a question, you can't go back to the last question.</li>
+            <li>You can only attempt all the questions once, you cannot retake the quiz.</li>
+            <li>Once the timer ends, the form would be auto-submitted with the questions you have attempted and results would be shown.</li>
+            <li>If you logout in the middle of the quiz, you can resume the quiz from the last question you were in.</li>
+            </ul>
         {% endif %}
     </div>
 </div>

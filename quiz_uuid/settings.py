@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,10 +42,11 @@ INSTALLED_APPS = [
     #local apps
     'accounts',
     'quiz',
+    'quiz_uuid',
 
     #3rd party apps
     'crispy_forms',
-    'mathfilters'
+    'mathfilters',
 ]
 
 MIDDLEWARE = [
@@ -113,7 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
@@ -126,15 +128,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = os.path.join(BASE_DIR / 'static')
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static_files")
+]
 
 #using custom user model
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
-# Page to go after successfull login
+# Page to go after successful login
 LOGIN_REDIRECT_URL = 'quiz:start-page'
 
-# Page to go after successfull logout
+# Page to go after successful logout
 LOGOUT_REDIRECT_URL = 'quiz:start-page'
 
 # This will display email in Console.

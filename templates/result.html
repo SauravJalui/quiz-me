@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 {% block content %}
 
-<div class="card text-center"> 
+<div class="card text-left"> 
     <div class="card-body"> 
         <h2>Hi {{ user.email }}</h2>
         <h5 class="text-primary"> You have answered {{ user_score }} questions correctly,
@@ -41,14 +41,14 @@
                       {% for fill_in_the_blanks in fill_in_the_blanks %}
                         {% if answer_given.question.id == fill_in_the_blanks.question.id %}
                           {% if answer_given.is_answer_correct == True %}
-                            <br><u>{{answer_given.question }} </u>
-                            <br><p class="text-success">Congratulations!&#127881; You answered correctly.
+                            <br><u>{{answer_given.question}}</u>
+                            <br><p class="text-success">Congratulations!&#127881; You answered correctly.</p>
                             <p class="text-success">You answered : {{ answer_given.user_answer_fill_in_the_blanks }}
                             <br>Answer is : {{fill_in_the_blanks.correct_answer_fill_in_the_blanks }} </p>
                           {% else %}
-                            <br>{{answer_given.question }} 
+                            <br><u>{{answer_given.question }}</u>
                             <br><p class="text-danger">Incorrect Answer &#x2639 
-                            <br> <br>You answered : {{answer_given.user_answer_fill_in_the_blanks }}
+                            <br><br>You answered : {{answer_given.user_answer_fill_in_the_blanks }}
                             <br>Correct Answer is : {{fill_in_the_blanks.correct_answer_fill_in_the_blanks}} </p>
                           {% endif %}
                         {% endif %}

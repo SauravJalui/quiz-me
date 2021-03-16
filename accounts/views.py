@@ -1,20 +1,24 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import (
+    render, redirect, get_object_or_404, reverse
+)
 from django.urls import reverse_lazy
 from django.views.generic import View, UpdateView
 from . forms import SignUpForm, ProfileForm
 from . models import CustomUser, Profile
-from django.contrib.auth import login
+from quiz.models import UserProgress
+from django.contrib.auth.views import LoginView
 from django.contrib import messages
 from django.contrib.sites.shortcuts import get_current_site
 from django.utils.encoding import force_bytes, force_text
-from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.http import (
+    urlsafe_base64_encode, urlsafe_base64_decode)
 from django.template.loader import render_to_string
 from . tokens import account_activation_token
 
 
 class SignUpView(View):
     '''This is the signup view with renders the signup template'''
-    form_class = SignUpForm
+    form_class = SignUpForm 
     template_name = 'registration/signup.html'
 
     def get(self, request, *args, **kwargs):
@@ -73,3 +77,17 @@ class ProfileView(UpdateView):
     form_class = ProfileForm
     success_url = reverse_lazy('quiz:start-page')
     template_name = 'registration/profile.html'
+
+
+
+class CustomLoginView(LoginView):
+    '''Custom login view to return the user to the same page(question) 
+    he was in when he logged out'''
+    template_name = 'registration/login.html'
+
+    def get_success_url(self, *args, **kwargs):
+        user_progress = get_object_or_404(UserProgress,
+                                          user=self.request.user)
+        saved_page = reverse('quiz:question-page')
+        return_saved_page = f'{saved_page}?page={user_progress.current_page}'
+        return return_saved_page
