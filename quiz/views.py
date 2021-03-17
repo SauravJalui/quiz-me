@@ -1,11 +1,12 @@
-from django.shortcuts import get_object_or_404
 from accounts.models import CustomUser
 from django.views.generic import ListView, TemplateView
 from django.contrib.auth.decorators import login_required
 from django.utils import decorators
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.decorators import method_decorator
-from django.shortcuts import HttpResponseRedirect, reverse
+from django.shortcuts import (
+    HttpResponseRedirect, reverse, get_object_or_404
+)
 from datetime import datetime, timedelta
 from .models import (
     UserProgress, 
@@ -79,12 +80,12 @@ class ExamListView(ListView):
         if total_count == user_progress.current_page:
             user_progress.has_finished = True
             user_progress.save()
-            return HttpResponseRedirect(reverse('quiz:result-page'))
+            return HttpResponseRedirect(reverse('quiz:result_page'))
 
         else:
             user_progress.has_finished = False
             user_progress.save()
-            question_page = reverse('quiz:question-page')
+            question_page = reverse('quiz:question_page')
             return_next_page = f'{question_page}?page={user_progress.current_page+1}'
             return HttpResponseRedirect(return_next_page)
 

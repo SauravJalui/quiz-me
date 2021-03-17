@@ -128,7 +128,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR / 'static')
+STATIC_ROOT = os.path.join(BASE_DIR ,"static")
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static_files")
 ]
@@ -137,10 +137,10 @@ STATICFILES_DIRS = [
 AUTH_USER_MODEL = 'accounts.CustomUser'
 
 # Page to go after successful login
-LOGIN_REDIRECT_URL = 'quiz:start-page'
+LOGIN_REDIRECT_URL = 'quiz:start_page'
 
 # Page to go after successful logout
-LOGOUT_REDIRECT_URL = 'quiz:start-page'
+LOGOUT_REDIRECT_URL = 'quiz:start_page'
 
 # This will display email in Console.
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

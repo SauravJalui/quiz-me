@@ -43,7 +43,8 @@ class SignUpView(View):
             })
             user.email_user(subject, message)
 
-            messages.success(request, ('Please confirm your email to complete registration.'))
+            messages.success(request, (
+                'Please confirm your email to complete registration.'))
 
             return redirect('accounts:login')
 
@@ -51,7 +52,8 @@ class SignUpView(View):
 
 
 class ActivateAccount(View):
-    '''This is a function to confirm the user email, if email is not confirmed user has no access to the account'''
+    '''This is a function to confirm the user email, 
+    if email is not confirmed user has no access to the account'''
     def get(self, request, uidb64, token, *args, **kwargs):
         try:
             uid = force_text(urlsafe_base64_decode(uidb64))
@@ -63,11 +65,13 @@ class ActivateAccount(View):
             user.is_active = True
             user.profile.email_confirmed = True
             user.save()
-            messages.success(request, ('Your account have been confirmed, Kindly log in to your account now'))
+            messages.success(request, ('Your account have been confirmed, \
+                Kindly log in to your account now'))
             return redirect('accounts:login')
         else:
-            messages.warning(request, ('The confirmation link was invalid, possibly it has already been used.'))
-            return redirect('quiz:start-page')
+            messages.warning(request, ('The confirmation link was invalid, \
+                possibly it has already been used.'))
+            return redirect('quiz:start_page')
 
 
 
@@ -75,7 +79,7 @@ class ProfileView(UpdateView):
     '''This is to update the users details'''
     model = CustomUser
     form_class = ProfileForm
-    success_url = reverse_lazy('quiz:start-page')
+    success_url = reverse_lazy('quiz:start_page')
     template_name = 'registration/profile.html'
 
 
@@ -88,6 +92,6 @@ class CustomLoginView(LoginView):
     def get_success_url(self, *args, **kwargs):
         user_progress = get_object_or_404(UserProgress,
                                           user=self.request.user)
-        saved_page = reverse('quiz:question-page')
-        return_saved_page = f'{saved_page}?page={user_progress.current_page}'
-        return return_saved_page
+        saved_page = reverse('quiz:question_page')
+        saved_page_url = f'{saved_page}?page={user_progress.current_page}'
+        return saved_page_url

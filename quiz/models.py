@@ -30,7 +30,7 @@ class Question(models.Model):
 class Mcq(models.Model):
     '''MCQ Questions'''
     question = models.OneToOneField(
-        Question, on_delete=models.CASCADE)
+        Question, on_delete=models.PROTECT)
     option1 = models.CharField(max_length=100)
     option2 = models.CharField(max_length=100)
     option3 = models.CharField(max_length=100)
@@ -53,7 +53,7 @@ class Mcq(models.Model):
 class FillInTheBlanks(models.Model):
     '''One answer model'''
     question = models.OneToOneField(
-        Question, on_delete=models.CASCADE)
+        Question, on_delete=models.PROTECT)
     correct_answer_fill_in_the_blanks = models.CharField(
         default="", max_length=100)
 
@@ -71,9 +71,9 @@ class AnswerGiven(models.Model):
         default=uuid.uuid4, 
         editable=False, 
         unique=True)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT, null=True)
     question = models.ForeignKey(
-        Question, on_delete=models.CASCADE)
+        Question, on_delete=models.PROTECT)
     user_answer_mcq = models.IntegerField(default=0)
     user_answer_fill_in_the_blanks = models.CharField(
         max_length=100)
@@ -95,7 +95,7 @@ class UserProgress(models.Model):
         default=uuid.uuid4, 
         editable=False, 
         unique=True)
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.PROTECT)
     current_page = models.IntegerField(default=1)
     user_score = models.IntegerField(default=0)
     user_time = models.DateTimeField(default=get_deadline)

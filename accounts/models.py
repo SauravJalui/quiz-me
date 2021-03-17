@@ -5,7 +5,8 @@ from .managers import CustomUserManager
 import uuid
 
 class CustomUser(AbstractUser):
-    '''This is a customuser model since we need uuid for the id, and it also takes email id instead of username'''
+    '''This is a customuser model since we need uuid for the id, 
+    and it also takes email id instead of username'''
     uuid = models.UUIDField(
         primary_key=True, 
         default=uuid.uuid4, 
@@ -27,7 +28,7 @@ class Profile(models.Model):
          primary_key = True, 
          default = uuid.uuid4, 
          editable = False)
-    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE)
+    user = models.OneToOneField(CustomUser, on_delete=models.PROTECT)
     email_confirmed = models.BooleanField(default=False)
 
     def __str__(self):

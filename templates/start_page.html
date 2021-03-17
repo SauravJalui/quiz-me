@@ -4,11 +4,13 @@
 
 <div class="card text-left"> 
     <div class="card-body"> 
-        <h2>Welcome to Quiz Me</h2>
+        
         {% if user.is_authenticated %}
-            <h5>Hi {{user.email}}</h5> <br>
-            <h5>Start quiz by clicking : <a class="btn btn-success" href="{% url 'quiz:question-page' %}"> Start</a></h5> 
+            <h4>Hi {{user.email}}</h4> 
+            <h5>If you have not attempted all of the questions you can resume quiz by clicking the button below. <p></p> <a class="btn btn-success" href="{% url 'quiz:question_page' %}">Resume Quiz</a></h5>
+            <h5>If you have already completed the quiz, you can view your results by clicking the results button below. <p></p> <a class="btn btn-warning" href="{% url 'quiz:result_page' %}">Show Results</a></h5>
         {% else %}
+            <h2>Welcome to Quiz Me</h2>
             If you don't have an account,<br><a class="btn btn-primary" href="{% url 'accounts:signup' %}">SignUp </a> <br>
             Already Have An Account? <br> <a class="btn btn-success" href="{% url 'accounts:login'%}">LogIn</a> <p></p>
             <h5>Instructions for quiz:</h5>
