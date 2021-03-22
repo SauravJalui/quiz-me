@@ -20,7 +20,7 @@
 </div>
 
 {% for question in questions %}    <hr>
-    <form method="POST" id="myform">
+    <form method="POST" id="myform" action="{% url 'quiz:calculation_page' %}">
         {% csrf_token %}
             <b>{{page_obj.number}}] {{question.title}}</b>  
                 <input type="hidden" id="question_id" name="question_id" value="{{question.id}}">

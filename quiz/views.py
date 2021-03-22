@@ -1,5 +1,5 @@
 from accounts.models import CustomUser
-from django.views.generic import ListView, TemplateView
+from django.views.generic import ListView, TemplateView, View
 from django.contrib.auth.decorators import login_required
 from django.utils import decorators
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -27,13 +27,46 @@ decorators_for_result_view = [login_required,
 @method_decorator(decorators_for_exam_view, name='dispatch')
 class ExamListView(ListView):
     """
-
     view to represent all the questions in the database
     """
     template_name = 'index.html'
     context_object_name = 'questions'
     paginate_by = 1
 
+    
+    def get_queryset(self, **kwargs):
+        questions = Question.objects.all()
+        actual_page = self.request.GET.get('page', 1)
+        user_progress = get_object_or_404(UserProgress,
+                                          user=self.request.user)
+
+        if int(actual_page) == 1 and user_progress.has_started is False:
+            total_minutes = Question.objects.all().count()
+            user_progress.user_time = datetime.now()
+
+            user_progress.user_end_time = user_progress.user_time + \
+                timedelta(minutes=total_minutes)
+            user_progress.has_started = True
+            user_progress.has_finished = False
+            user_progress.user_score = 0
+            AnswerGiven.objects.filter(user=self.request.user).delete()
+
+        user_progress.current_page = actual_page
+        user_progress.save()
+
+        return questions
+
+    def get_context_data(self, **kwargs):
+        context = super(ExamListView, self).get_context_data(**kwargs)
+        user_progress = get_object_or_404(UserProgress,
+                                          user=self.request.user)
+        context['mcqs'] = Mcq.objects.all()
+        context['end_time'] = user_progress.user_end_time
+        context['start_time'] = user_progress.user_time
+        return context
+
+
+class ExamCalculationView(View):
     def post(self, request, *args, **kwargs):
         """
         Post the user answer
@@ -88,38 +121,6 @@ class ExamListView(ListView):
             question_page = reverse('quiz:question_page')
             return_next_page = f'{question_page}?page={user_progress.current_page+1}'
             return HttpResponseRedirect(return_next_page)
-
-    def get_queryset(self, **kwargs):
-        questions = Question.objects.all()
-        actual_page = self.request.GET.get('page', 1)
-        user_progress = get_object_or_404(UserProgress,
-                                          user=self.request.user)
-
-        if int(actual_page) == 1 and user_progress.has_started is False:
-            total_minutes = Question.objects.all().count()
-            user_progress.user_time = datetime.now()
-
-            user_progress.user_end_time = user_progress.user_time + \
-                timedelta(minutes=total_minutes)
-            user_progress.has_started = True
-            user_progress.has_finished = False
-            user_progress.user_score = 0
-            AnswerGiven.objects.filter(user=self.request.user).delete()
-
-        user_progress.current_page = actual_page
-        user_progress.save()
-
-        return questions
-
-    def get_context_data(self, **kwargs):
-        context = super(ExamListView, self).get_context_data(**kwargs)
-
-        user_progress = get_object_or_404(UserProgress,
-                                          user=self.request.user)
-        context['mcqs'] = Mcq.objects.all()
-        context['end_time'] = user_progress.user_end_time
-        context['start_time'] = user_progress.user_time
-        return context
 
 
 @method_decorator(decorators_for_result_view, name='dispatch')
