@@ -8,12 +8,17 @@ from django.contrib.auth.views import (
     PasswordResetCompleteView,
 )
 from . views import (
-    SignUpView, ProfileView, ActivateAccount, CustomLoginView
+    SignUpView, ProfileView, ActivateAccount, CustomLoginView,
+    ApiSignUpView, ApiLogInView
 )
+from rest_framework.authtoken.views import obtain_auth_token
+
 
 app_name = 'accounts'
 
 urlpatterns = [
+    path('api-signup/', ApiSignUpView.as_view(), name='api_sign_up'),
+    path('api-login/', ApiLogInView.as_view(), name='api_log_in'),
     path('login/', CustomLoginView.as_view(
         redirect_authenticated_user=True, template_name='registration/login.html'), name='login'),
     path('logout/', LogoutView.as_view(template_name='registration/logout.html'), name='logout'),

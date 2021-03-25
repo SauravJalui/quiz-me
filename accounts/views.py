@@ -14,6 +14,11 @@ from django.utils.http import (
     urlsafe_base64_encode, urlsafe_base64_decode)
 from django.template.loader import render_to_string
 from . tokens import account_activation_token
+from rest_framework.views import APIView
+from .serializers import SignUpSerializer, LogInSerializer
+from rest_framework.response import Response
+from rest_framework.authtoken.models import Token
+
 
 
 class SignUpView(View):
@@ -95,3 +100,36 @@ class CustomLoginView(LoginView):
         saved_page = reverse('quiz:question_page')
         saved_page_url = f'{saved_page}?page={user_progress.current_page}'
         return saved_page_url
+
+
+
+class ApiSignUpView(APIView):
+    permission_classes = []
+
+    def post(self, request):
+        serializer = SignUpSerializer(data=request.data)
+        data = {}
+        if serializer.is_valid():
+            user = serializer.save()
+            data['success'] = 'User registered successfully'
+            token = Token.objects.get(user=user).key
+            data['token'] = token
+        else:
+            data = serializer.errors
+        return Response(data)
+
+
+
+class ApiLogInView(APIView):
+    permission_classes = []
+
+    def post(self, request):
+        serializer = LogInSerializer(data=request.data)
+        data = {}
+        if serializer.is_valid():
+            validated_data = serializer.validated_data
+            user = get_object_or_404(CustomUser, email=validated_data['email'])
+            data['token'] = get_object_or_404(Token, user=user).key
+        else:
+            data = serializer.errors
+        return Response(data)

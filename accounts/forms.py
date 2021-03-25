@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 
 class SignUpForm(UserCreationForm):
-    '''This is the signup form with username, email and password required'''
+    '''This is the signup form with email and password required'''
     email = forms.EmailField(
         max_length=254, help_text='Enter a valid email address')
 
@@ -17,7 +17,7 @@ class SignUpForm(UserCreationForm):
             ]
 
 class ProfileForm(forms.ModelForm):
-    '''This displays and allows changes to the Users profile with his username and email'''
+    '''This displays and allows changes to the Users profile with his email'''
 
     class Meta:
         model = CustomUser
